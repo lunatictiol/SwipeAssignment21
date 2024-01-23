@@ -8,9 +8,11 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.lunatictiol.swipeycs21assignment.presentaion.ProductScreen
+import com.lunatictiol.swipeycs21assignment.util.AddProductScreen
+import com.lunatictiol.swipeycs21assignment.util.ProductScreen
+import com.lunatictiol.swipeycs21assignment.util.SearchMenu
 import com.lunatictiol.swipeycs21assignment.presentaion.SearchScreen.SearchScreen
-import com.lunatictiol.swipeycs21assignment.presentaion.Searchmenu
+import com.lunatictiol.swipeycs21assignment.presentaion.addProductScreen.AddProductScreen
 
 import com.lunatictiol.swipeycs21assignment.presentaion.productsScreen.ProductsScreen
 
@@ -26,8 +28,11 @@ class MainActivity : ComponentActivity() {
                 composable(ProductScreen.route) {
                     ProductsScreen(navHostController = navController)
                 }
-                composable(Searchmenu.route){
+                composable(SearchMenu.route){
                     SearchScreen(navHostController = navController)
+                }
+                composable(AddProductScreen.route){
+                   AddProductScreen(context = navController.context, navHostController = navController )
                 }
 
             }

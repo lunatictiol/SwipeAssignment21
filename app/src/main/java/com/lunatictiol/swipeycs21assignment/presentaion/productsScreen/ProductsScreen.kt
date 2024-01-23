@@ -4,50 +4,53 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.lunatictiol.swipeycs21assignment.presentaion.Searchmenu
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieClipSpec
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.lunatictiol.swipeycs21assignment.R
+import com.lunatictiol.swipeycs21assignment.util.SearchMenu
 import com.lunatictiol.swipeycs21assignment.presentaion.productsScreen.components.ListItem
 import com.lunatictiol.swipeycs21assignment.presentaion.common.MyAppBar
-import com.lunatictiol.swipeycs21assignment.presentaion.productsScreen.components.addProductBottomSheet.AddProductBottomSheet
 import com.lunatictiol.swipeycs21assignment.presentaion.ui.theme.md_theme_dark_inversePrimary
 import com.lunatictiol.swipeycs21assignment.presentaion.ui.theme.md_theme_light_background
 import org.koin.androidx.compose.koinViewModel
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductsScreen(
     viewModel: ProductsViewModel = koinViewModel(),
     navHostController: NavHostController
 ){
-    val sheetState = rememberModalBottomSheetState()
-    val isOpened = viewModel.sheetIsOpen
    Scaffold(
        containerColor = md_theme_light_background ,
-       topBar = { MyAppBar(navHostController) { viewModel.changeSheetState() } },
+       topBar = { MyAppBar(navHostController)  },
        floatingActionButton = {
            Box(modifier = Modifier.background(md_theme_dark_inversePrimary, shape =
                RoundedCornerShape(30.dp)
            ), contentAlignment = Alignment.Center ) {
                IconButton(onClick = {
-                   navHostController.navigate(Searchmenu.route)
+                   navHostController.navigate(SearchMenu.route)
 
 
                }) {
@@ -55,7 +58,9 @@ fun ProductsScreen(
            }
        }}
    ) { paddingValues->
-        val list = viewModel.state.value
+        val list by viewModel.state.observeAsState(emptyList())
+       val isloading =viewModel.isLoading
+        if (!isloading.value){
          LazyColumn(
 
                        modifier = Modifier
@@ -64,7 +69,7 @@ fun ProductsScreen(
                            .fillMaxSize()
 
                    ) {
-                       items(list) { products ->
+                       items(list!!) { products ->
                            Box(
                                modifier = Modifier
                                    .padding(10.dp)
@@ -78,19 +83,38 @@ fun ProductsScreen(
 
                    }
                }
-    if (isOpened.value){
-    ModalBottomSheet(
-        sheetState = sheetState,
-        onDismissRequest = {viewModel.changeSheetState()}) {
-         AddProductBottomSheet(
-             context = navHostController.context,
-             onClick = { viewModel.changeSheetState() }
-         )
+       else{
+            Box (modifier = Modifier.fillMaxSize().padding(top = paddingValues.calculateTopPadding())  ){
+                AnimatedPreloader(modifier = Modifier.size(200.dp).align(Alignment.Center),isloading.value)
+            }
 
-    }}
+       }
+   }
 
 
 
+
+}
+@Composable
+fun AnimatedPreloader(modifier: Modifier = Modifier, isLoading:Boolean) {
+    val composition by rememberLottieComposition(
+        LottieCompositionSpec.RawRes(
+            R.raw.loading_animation)
+    )
+
+
+    val clipSpecs = LottieClipSpec.Progress(
+        min =  0.0f,
+        max =  0.9f
+    )
+
+
+    LottieAnimation(
+        composition = composition,
+          clipSpec = clipSpecs,
+        modifier = modifier,
+        iterations = if (isLoading)  LottieConstants.IterateForever else 3,
+    )
 }
 
 

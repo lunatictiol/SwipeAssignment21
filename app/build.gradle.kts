@@ -55,7 +55,7 @@ dependencies {
     val nav_version = "2.7.6"
 
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.compose.ui:ui")
@@ -69,15 +69,15 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.0")
     //navigation
     implementation ("androidx.navigation:navigation-compose:$nav_version")
     // coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     // Coroutine Lifecycle Scopes
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation ("androidx.compose.runtime:runtime-livedata:1.5.4")
     // koin for dependency injection
     implementation ("io.insert-koin:koin-android:3.5.3")
     implementation ("io.insert-koin:koin-androidx-compose:3.5.3")
@@ -90,9 +90,11 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:5.0.0-alpha.12")
     implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.12")
     //SPLASH
-    implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation("androidx.core:core-splashscreen:1.0.1")
     //BottomSheet
     implementation("androidx.compose:compose-bom:2023.10.01")
+    //LOTI Animation
+    implementation("com.airbnb.android:lottie-compose:6.0.1")
 
 
   }

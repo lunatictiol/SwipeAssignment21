@@ -17,14 +17,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
-import com.lunatictiol.swipeycs21assignment.presentaion.ProductScreen
+import com.lunatictiol.swipeycs21assignment.util.AddProductScreen
+import com.lunatictiol.swipeycs21assignment.util.ProductScreen
 import com.lunatictiol.swipeycs21assignment.presentaion.ui.theme.md_theme_dark_inversePrimary
 import com.lunatictiol.swipeycs21assignment.presentaion.ui.theme.md_theme_dark_onPrimaryContainer
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyAppBar(
     navHostController: NavHostController,
-    onclick:()->Unit
+
 ){
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -35,7 +36,7 @@ fun MyAppBar(
         ),
         modifier = Modifier.background(Color.Cyan),
         navigationIcon = {
-            if (navHostController.currentDestination?.route==ProductScreen.route){
+            if (navHostController.currentDestination?.route== ProductScreen.route){
                 Icon(Icons.Default.Home, contentDescription = "home", tint =md_theme_dark_inversePrimary )
             }
             else{
@@ -51,8 +52,10 @@ fun MyAppBar(
                 )
                 },
         actions = {
-            if (navHostController.currentDestination?.route==ProductScreen.route){
-            IconButton(onClick = onclick) {
+            if (navHostController.currentDestination?.route== ProductScreen.route){
+            IconButton(onClick ={
+                navHostController.navigate(AddProductScreen.route)
+            }) {
                 Icon(Icons.Default.AddCircle, contentDescription = "Search")
             }}
         }

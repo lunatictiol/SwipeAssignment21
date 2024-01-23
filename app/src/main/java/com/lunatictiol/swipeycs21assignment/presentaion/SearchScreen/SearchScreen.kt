@@ -44,7 +44,7 @@ fun SearchScreen(viewModel: SearchScreenViewModel = koinViewModel(),navHostContr
     // Local keyboard controller
     val keyboardController = LocalSoftwareKeyboardController.current
     Log.e("search",searchResults.toString())
-    Scaffold(topBar = { MyAppBar(navHostController =navHostController,{} )  }) { paddingValues ->
+    Scaffold(topBar = { MyAppBar(navHostController =navHostController)  }) { paddingValues ->
         SearchBar(
             colors = SearchBarDefaults.colors(md_theme_light_onPrimary),
             modifier = Modifier.padding(top=paddingValues.calculateTopPadding()) ,

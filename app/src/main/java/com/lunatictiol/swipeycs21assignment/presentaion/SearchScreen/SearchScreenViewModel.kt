@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lunatictiol.swipeycs21assignment.data.remote.responses.ProductDetails
+import com.lunatictiol.swipeycs21assignment.data.model.responses.ProductDetails
 import com.lunatictiol.swipeycs21assignment.repository.SwipeRepository
 import com.lunatictiol.swipeycs21assignment.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow

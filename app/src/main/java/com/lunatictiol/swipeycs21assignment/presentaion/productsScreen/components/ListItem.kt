@@ -21,13 +21,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.lunatictiol.swipeycs21assignment.R
-import com.lunatictiol.swipeycs21assignment.data.remote.responses.ProductDetails
+import com.lunatictiol.swipeycs21assignment.data.model.responses.ProductDetails
 import com.lunatictiol.swipeycs21assignment.presentaion.ui.theme.md_theme_dark_onPrimary
 import com.lunatictiol.swipeycs21assignment.presentaion.ui.theme.md_theme_light_primary
 import com.lunatictiol.swipeycs21assignment.presentaion.ui.theme.md_theme_light_secondaryContainer
 
 @Composable
-fun ListItem(productDetails:ProductDetails){
+fun ListItem(productDetails: ProductDetails){
     Box(modifier = Modifier
         .fillMaxWidth()
         .background(color = md_theme_light_secondaryContainer)
