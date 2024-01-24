@@ -1,5 +1,5 @@
 package com.lunatictiol.swipeycs21assignment.util
-
+//routes for jetpack navigation
 interface Destinations {
     val route : String
 }

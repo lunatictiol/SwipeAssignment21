@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
-
+//api to post and get data
 interface SwipeApi{
     @GET("get")
   suspend fun getProducts(): GetProductResponse

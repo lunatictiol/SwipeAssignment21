@@ -11,6 +11,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 class  SwipeRepository (
     private val api: SwipeApi
 ){
+    //get product from the api
     suspend fun getProducts(): Resource<GetProductResponse> {
         val response = try {
             api.getProducts()
@@ -21,7 +22,7 @@ class  SwipeRepository (
     }
 
 
-
+//add product function
      suspend fun addProduct(addProductDetails: AddProductDetails):Resource<AddProductResponse> {
         return try {
             val name = addProductDetails.product_name.toRequestBody("text/plain".toMediaTypeOrNull())

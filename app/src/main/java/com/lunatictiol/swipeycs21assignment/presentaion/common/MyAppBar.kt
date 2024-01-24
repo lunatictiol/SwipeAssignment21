@@ -26,7 +26,7 @@ import com.lunatictiol.swipeycs21assignment.presentaion.ui.theme.md_theme_dark_o
 fun MyAppBar(
     navHostController: NavHostController,
 
-){
+){  // App bar for all the screens
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = md_theme_dark_onPrimaryContainer,
@@ -35,11 +35,13 @@ fun MyAppBar(
 
         ),
         modifier = Modifier.background(Color.Cyan),
+        //home icon
         navigationIcon = {
             if (navHostController.currentDestination?.route== ProductScreen.route){
                 Icon(Icons.Default.Home, contentDescription = "home", tint =md_theme_dark_inversePrimary )
             }
             else{
+                //back  button
                   IconButton(onClick = { navHostController.popBackStack() }) {
                       Icon(Icons.Default.ArrowBack, contentDescription ="back" , tint = md_theme_dark_inversePrimary)
                   }}

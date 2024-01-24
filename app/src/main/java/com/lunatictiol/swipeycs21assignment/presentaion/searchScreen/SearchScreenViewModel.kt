@@ -1,4 +1,4 @@
-package com.lunatictiol.swipeycs21assignment.presentaion.SearchScreen
+package com.lunatictiol.swipeycs21assignment.presentaion.searchScreen
 
 
 import android.util.Log
@@ -10,14 +10,12 @@ import androidx.lifecycle.viewModelScope
 import com.lunatictiol.swipeycs21assignment.data.model.responses.ProductDetails
 import com.lunatictiol.swipeycs21assignment.repository.SwipeRepository
 import com.lunatictiol.swipeycs21assignment.util.Resource
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class SearchScreenViewModel( private val repository: SwipeRepository):ViewModel() {
     private val _list = mutableStateOf<List<ProductDetails>>(listOf())
     val result = mutableStateOf<List<ProductDetails>>(listOf())
     var searchQuery by mutableStateOf("")
-    val list = MutableStateFlow(_list.value)
 
     init {
         loadProducts()
@@ -44,10 +42,9 @@ class SearchScreenViewModel( private val repository: SwipeRepository):ViewModel(
 
     private fun loadProducts() {
         viewModelScope.launch {
-            val result = repository.getProducts()
-            when(result) {
+            when(val result = repository.getProducts()) {
                 is Resource.Success->{
-                    _list.value= result.data ?: emptyList()
+                    _list.value= result.data
 
                     Log.e("search message", searchQuery)
                 }

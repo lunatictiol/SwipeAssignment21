@@ -91,10 +91,12 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.12")
     //SPLASH
     implementation("androidx.core:core-splashscreen:1.0.1")
-    //BottomSheet
-    implementation("androidx.compose:compose-bom:2023.10.01")
     //LOTI Animation
-    implementation("com.airbnb.android:lottie-compose:6.0.1")
+    implementation("com.airbnb.android:lottie-compose:6.3.0")
+
+    implementation ("androidx.compose.material:material:1.1.2")
+
+
 
 
   }

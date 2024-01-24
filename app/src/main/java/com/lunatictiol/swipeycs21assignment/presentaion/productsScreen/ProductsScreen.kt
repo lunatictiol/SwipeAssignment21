@@ -8,13 +8,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -26,7 +31,6 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieClipSpec
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.lunatictiol.swipeycs21assignment.R
 import com.lunatictiol.swipeycs21assignment.util.SearchMenu
@@ -36,12 +40,15 @@ import com.lunatictiol.swipeycs21assignment.presentaion.ui.theme.md_theme_dark_i
 import com.lunatictiol.swipeycs21assignment.presentaion.ui.theme.md_theme_light_background
 import org.koin.androidx.compose.koinViewModel
 
-
+//main screen
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ProductsScreen(
     viewModel: ProductsViewModel = koinViewModel(),
     navHostController: NavHostController
 ){
+
+
    Scaffold(
        containerColor = md_theme_light_background ,
        topBar = { MyAppBar(navHostController)  },
@@ -58,9 +65,15 @@ fun ProductsScreen(
            }
        }}
    ) { paddingValues->
+       //local states
         val list by viewModel.state.observeAsState(emptyList())
        val isloading =viewModel.isLoading
+       val isRefreshing by viewModel.isRefreshing.collectAsState()
+       val pullRefreshState = rememberPullRefreshState(isRefreshing, { viewModel.refresh() })
+       //box for main layout
         if (!isloading.value){
+        Box(modifier = Modifier.fillMaxSize().pullRefresh(pullRefreshState)){
+
          LazyColumn(
 
                        modifier = Modifier
@@ -75,6 +88,7 @@ fun ProductsScreen(
                                    .padding(10.dp)
 
                            ) {
+
                                ListItem(productDetails = products)
                            }
 
@@ -82,10 +96,23 @@ fun ProductsScreen(
                        }
 
                    }
+            //refresh
+            PullRefreshIndicator(
+                refreshing = isRefreshing,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+
+                )
+        }
                }
        else{
-            Box (modifier = Modifier.fillMaxSize().padding(top = paddingValues.calculateTopPadding())  ){
-                AnimatedPreloader(modifier = Modifier.size(200.dp).align(Alignment.Center),isloading.value)
+   //loading animation
+            Box (modifier = Modifier
+                .fillMaxSize()
+                .padding(top = paddingValues.calculateTopPadding())  ){
+                AnimatedPreloader(modifier = Modifier
+                    .size(200.dp)
+                    .align(Alignment.Center),isloading.value)
             }
 
        }
@@ -97,6 +124,7 @@ fun ProductsScreen(
 }
 @Composable
 fun AnimatedPreloader(modifier: Modifier = Modifier, isLoading:Boolean) {
+    //animation logic
     val composition by rememberLottieComposition(
         LottieCompositionSpec.RawRes(
             R.raw.loading_animation)

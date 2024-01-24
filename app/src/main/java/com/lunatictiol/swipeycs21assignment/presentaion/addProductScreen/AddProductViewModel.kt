@@ -14,6 +14,7 @@ class AddProductViewModel(
     private val repository: SwipeRepository
 
 ) : ViewModel() {
+    //states
     private var _toastMessage = mutableStateOf("")
     var toast = _toastMessage
     var success = mutableStateOf(false)
@@ -21,7 +22,7 @@ class AddProductViewModel(
     var failed = mutableStateOf(false)
     var showAddAnotherButton = mutableStateOf(false)
     private var imagePart: MultipartBody.Part? = null
-    private var _productDetailsState = mutableStateOf<AddProductDetails>(
+    private var _productDetailsState = mutableStateOf(
         AddProductDetails(
             product_name = "",
             price = "",
@@ -30,15 +31,15 @@ class AddProductViewModel(
             tax = ""
         )
     )
-
+//function to save image state
     fun saveImage(part: MultipartBody.Part) {
         imagePart = part
     }
-
+//function reset image state
     fun removeImage() {
         imagePart = null
     }
-
+// add data state
     fun addData(
         name: String,
         type: String,
@@ -59,7 +60,7 @@ class AddProductViewModel(
 
 
     }
-
+//upload the data to the server
 
     private fun uploadData() {
        isLoading.value = true
@@ -87,7 +88,7 @@ class AddProductViewModel(
         }
 
     }
-
+//validate if data is empty
     fun validate(
         name: String,
         type: String,
@@ -96,11 +97,11 @@ class AddProductViewModel(
     )
 
             : Boolean {
-        if (name.isNotEmpty() && type.isNotEmpty() && price.isNotEmpty() && tax.isNotEmpty()) {
-            return true
+        return if (name.isNotEmpty() && type.isNotEmpty() && price.isNotEmpty() && tax.isNotEmpty()) {
+            true
         } else {
             _toastMessage.value = "Fields can't be empty"
-            return false
+            false
         }
 
     }

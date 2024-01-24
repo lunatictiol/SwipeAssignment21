@@ -26,7 +26,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -49,7 +48,7 @@ import com.lunatictiol.swipeycs21assignment.presentaion.ui.theme.md_theme_light_
 import com.lunatictiol.swipeycs21assignment.presentaion.ui.theme.md_theme_light_primaryContainer
 import org.koin.androidx.compose.koinViewModel
 
-
+//add product screen
 @Composable
 fun AddProductScreen(
     viewModel: AddProductViewModel = koinViewModel(),
@@ -58,6 +57,7 @@ fun AddProductScreen(
 
 
 ) {
+   //for top bar
    Scaffold(
        containerColor = md_theme_light_background ,
        topBar = { MyAppBar(navHostController)  }
@@ -65,7 +65,7 @@ fun AddProductScreen(
    ) {paddingValues->
 
        val isLoading =viewModel.isLoading
-
+   //main column
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -82,11 +82,13 @@ fun AddProductScreen(
     )
 
     {
+        //title
         Text(
             text = "Add Product",
             fontSize = 48.sp,
             color = md_theme_light_primary
         )
+        // card that contains all textFields and buttons
         Card(
             modifier = Modifier.background(
                 color = md_theme_light_primaryContainer,
@@ -103,7 +105,7 @@ fun AddProductScreen(
                     .fillMaxWidth(),
                 viewModel = viewModel,
                 context = context,
-                navHostController=navHostController
+
 
 
             )}
@@ -118,7 +120,7 @@ fun CardContent(
     modifier: Modifier,
     viewModel: AddProductViewModel,
     context: Context,
-    navHostController:NavHostController
+
 
 
 ) {
@@ -138,7 +140,8 @@ fun CardContent(
         horizontalAlignment = CenterHorizontally,
         verticalArrangement = Arrangement.Center
     )
-    {    // Text fields for entering product details
+    {
+        // Text fields for entering product details
 
         TextField(
             value = productName,
@@ -195,6 +198,7 @@ fun CardContent(
 
                 )
         }
+        //photo picker composable
         PhotoPicker(
             viewModel = viewModel
         )
@@ -257,7 +261,7 @@ fun AnimationContent(viewModel:AddProductViewModel, context: Context){
     val isFailed = viewModel.failed
     val isSuccess = viewModel.success
     val showAddButton = viewModel.showAddAnotherButton
-
+  //animation
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -270,11 +274,11 @@ fun AnimationContent(viewModel:AddProductViewModel, context: Context){
             min = if (isFailed.value) 0.499f else 0.0f,
             max = if (isSuccess.value) 0.44f else if (isFailed.value) 0.95f else 0.282f
         )
-
+//animation logic
         val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anim_loading_success_failed))
 
         LottieAnimation(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
+            modifier = Modifier.align(CenterHorizontally),
             composition = composition,
             iterations = if (isSuccess.value || isFailed.value) 1 else LottieConstants.IterateForever,
             clipSpec = clipSpecs,
