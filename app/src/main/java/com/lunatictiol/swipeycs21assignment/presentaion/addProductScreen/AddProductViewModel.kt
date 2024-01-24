@@ -80,6 +80,7 @@ class AddProductViewModel(
 
                 failed.value = true
                 _toastMessage.value = result.exception.message.toString()
+               //delay for animation to play
                 delay(4700)
                 showAddAnotherButton.value =true
 

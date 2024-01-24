@@ -44,21 +44,21 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
 
-
+// composable for bottom sheet photo picker
 @Composable
 fun PhotoPicker(viewModel: AddProductViewModel) {
     var selectedImage by remember {
         mutableStateOf<Uri?>(null)
     }
     val context = LocalContext.current as Activity
-
+//photo picker
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
             selectedImage = uri
             val fileDir = context.filesDir
             val file = File(fileDir, "image.png")
-
+            //make the file
             if (uri!=null) {
                 val inputStream = context.contentResolver.openInputStream(uri)
                 val outputStream = FileOutputStream(file)
@@ -90,7 +90,8 @@ fun PhotoPicker(viewModel: AddProductViewModel) {
 
 
         if (selectedImage==null){
-        IconButton(
+           //select photo button
+            IconButton(
             modifier = Modifier.fillMaxSize(.50f),
             onClick = {
             launchPhotoPicker()
@@ -125,7 +126,7 @@ fun PhotoPicker(viewModel: AddProductViewModel) {
                 }
         }
         }
-        else{
+        else{ //preview of image selected
             ImageLayoutView(selectedImage = selectedImage)
             IconButton(
                 modifier = Modifier.fillMaxWidth(.50f),
@@ -160,7 +161,7 @@ fun PhotoPicker(viewModel: AddProductViewModel) {
 
 @Composable
 fun ImageLayoutView(selectedImage: Uri?) {
-
+          //selected image
             Box(modifier = Modifier
                 .width(300.dp)
                 .height(200.dp)

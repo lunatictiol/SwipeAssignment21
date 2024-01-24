@@ -1,6 +1,7 @@
 package com.lunatictiol.swipeycs21assignment.presentaion.searchScreen
 
 
+
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,13 +27,13 @@ class SearchScreenViewModel( private val repository: SwipeRepository):ViewModel(
 
     fun search(){
         rest()
-       _list.value.forEach{
+        _list.value.forEach{
 
             if (it.product_name.contains(searchQuery,ignoreCase = true)){
-               result.value = result.value + it
+                result.value = result.value + it
                 Log.e("searchSS",result.value.toString())
-          }
-          }
+            }
+        }
         Log.e("searchSS",result.value.toString())
 
     }
@@ -62,7 +63,8 @@ class SearchScreenViewModel( private val repository: SwipeRepository):ViewModel(
     fun rest(){
         result.value = emptyList()
     }
-    }
+}
+
 
 
 
